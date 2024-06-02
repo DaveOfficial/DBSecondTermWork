@@ -1,40 +1,40 @@
-INSERT INTO Athletes (AthleteID, FirstName, LastName, DateOfBirth, Country)
-VALUES
-    (1, 'Michael', 'Phelps', '1985-06-30', 'United States'),
-    (2, 'Usain', 'Bolt', '1986-08-21', 'Jamaica'),
-    (3, 'Simone', 'Biles', '1997-03-14', 'United States'),
-    (4, 'Katie', 'Ledecky', '1997-03-17', 'United States'),
-    (5, 'Serena', 'Williams', '1981-09-26', 'United States');
+CREATE schema Olympics;
 
-INSERT INTO Sports (SportID, SportName)
-VALUES
-    (1, 'Swimming'),
-    (2, 'Track and Field'),
-    (3, 'Gymnastics'),
-    (4, 'Tennis');
+USE Olympics;
 
-INSERT INTO Events (EventID, EventName, SportID, EventDate)
-VALUES
-    (1, '100m Freestyle', 1, '2024-08-01'),
-    (2, '200m Freestyle', 1, '2024-08-03'),
-    (3, '100m Butterfly', 1, '2024-08-05'),
-    (4, '100m Sprint', 2, '2024-08-06'),
-    (5, 'Vault', 3, '2024-08-10'),
-    (6, 'Balance Beam', 3, '2024-08-11'),
-    (7, 'Singles', 4, '2024-08-15');
+CREATE TABLE Athletes (
+    AthleteID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    DateOfBirth DATE,
+    Country VARCHAR(50),
+    UNIQUE (FirstName, LastName, DateOfBirth)
+);
 
-INSERT INTO Medals (MedalID, MedalType)
-VALUES
-    (1, 'Gold'),
-    (2, 'Silver'),
-    (3, 'Bronze');
+CREATE TABLE Sports (
+    SportID INT PRIMARY KEY,
+    SportName VARCHAR(100)
+);
 
-INSERT INTO Participations (ParticipationID, AthleteID, EventID, MedalID)
-VALUES
-    (1, 1, 1, 1),  
-    (2, 1, 2, 1),  
-    (3, 1, 3, 2),  
-    (4, 2, 4, 1), 
-    (5, 3, 5, 1),  
-    (6, 3, 6, 1), 
-    (7, 5, 7, 3);  
+CREATE TABLE Events (
+    EventID INT PRIMARY KEY,
+    EventName VARCHAR(100),
+    SportID INT,
+    EventDate DATE,
+    FOREIGN KEY (SportID) REFERENCES Sports(SportID)
+);
+
+CREATE TABLE Medals (
+    MedalID INT PRIMARY KEY,
+    MedalType VARCHAR(10) CHECK (MedalType IN ('Gold', 'Silver', 'Bronze'))
+);
+
+CREATE TABLE Participations (
+    ParticipationID INT PRIMARY KEY,
+    AthleteID INT,
+    EventID INT,
+    MedalID INT,
+    FOREIGN KEY (AthleteID) REFERENCES Athletes(AthleteID),
+    FOREIGN KEY (EventID) REFERENCES Events(EventID),
+    FOREIGN KEY (MedalID) REFERENCES Medals(MedalID)
+);
