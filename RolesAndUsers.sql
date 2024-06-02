@@ -15,9 +15,9 @@ GRANT SELECT(SportName) ON Olympics.Sports TO ColumnAdmin;
 GRANT SELECT(EventName, EventDate) ON Olympics.Events TO ColumnAdmin;
 GRANT SELECT(MedalType) ON Olympics.Medals TO ColumnAdmin;
 
-CREATE USER 'db_admin'@'localhost' IDENTIFIED BY 'password';
-CREATE USER 'table_admin'@'localhost' IDENTIFIED BY 'password';
-CREATE USER 'column_admin'@'localhost' IDENTIFIED BY 'password';
+CREATE USER 'db_admin'@'localhost' IDENTIFIED BY 'adminpass';
+CREATE USER 'table_admin'@'localhost' IDENTIFIED BY 'tablepass';
+CREATE USER 'column_admin'@'localhost' IDENTIFIED BY 'columnpass';
 
 GRANT DatabaseAdmin TO 'db_admin'@'localhost';
 GRANT TableAdmin TO 'table_admin'@'localhost';
